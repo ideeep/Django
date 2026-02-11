@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - ShopHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .product-detail {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 8px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+        }
+
+        .product-info h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .in-stock {
+            color: #28a745;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        .out-stock {
+            color: #dc3545;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .details-grid {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .detail-item {
+            padding: 1rem;
+        }
+
+        .detail-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-value {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart-btn:hover {
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .related-section {
+            margin-top: 3rem;
+        }
+
+        .related-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .related-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .card-image {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .card-info {
+            padding: 1rem;
+        }
+
+        .card-name {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-price {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+
+            .product-image {
+                height: 250px;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <nav>
+            <div class="logo">🛍️ ShopHub</div>
+            <ul>
+                <li><a href="{% url 'Home' %}">Home</a></li>
+                <li><a href="{% url 'products' %}">Products</a></li>
+                <li><a href="{{ request.user|yesno:'/cart,/login' }}">Cart</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Product Detail -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{% url 'Home' %}">Home</a> / 
+            <a href="{% url 'products' %}">Products</a> / 
+            <span>{{ product.name }}</span>
+        </div>
+
+        <div class="product-detail">
+            <div class="product-image">📦</div>
+
+            <div class="product-info">
+                <h1>{{ product.name }}</h1>
+                <div class="rating">⭐ {{ product.rating }} ({{ product.reviews_count }} reviews)</div>
+                <div class="price">₹{{ product.price }}</div>
+
+                {% if product.stock > 0 %}
+                    <div class="in-stock">✓ In Stock ({{ product.stock }} available)</div>
+                {% else %}
+                    <div class="out-stock">✗ Out of Stock</div>
+                {% endif %}
+
+                <div class="description">
+                    {{ product.description }}
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Category</div>
+                        <div class="detail-value">{{ product.get_category_display }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Rating</div>
+                        <div class="detail-value">{{ product.rating }}/5</div>
+                    </div>
+                </div>
+
+                {% if product.stock > 0 %}
+                    {% if user.is_authenticated %}
+                        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="add-to-cart-btn">🛒 Add to Cart</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="add-to-cart-btn" style="display: block; text-align: center; text-decoration: none;">Login to Add to Cart</a>
+                    {% endif %}
+                {% else %}
+                    <button class="add-to-cart-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Out of Stock</button>
+                {% endif %}
+
+                <a href="{% url 'products' %}" class="back-btn">← Back to Products</a>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        {% if related_products %}
+            <div class="related-section">
+                <h2 class="related-title">Related Products</h2>
+                <div class="related-products">
+                    {% for related in related_products %}
+                        <div class="product-card">
+                            <div class="card-image">📦</div>
+                            <div class="card-info">
+                                <div class="card-name">{{ related.name }}</div>
+                                <div class="card-price">₹{{ related.price }}</div>
+                                <a href="{% url 'product_detail' related.id %}" class="card-link">View →</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 ShopHub. All rights reserved.</p>
+    </footer>
+</body>
+</html>
